@@ -1,0 +1,9 @@
+jupyterlab
+scikit-learn
+pandas
+polars
+numpy
+matplotlib
+seaborn
+torch
+huggingface_hub
