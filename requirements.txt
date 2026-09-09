@@ -7,3 +7,5 @@ matplotlib
 seaborn
 torch
 huggingface_hub
+tokenizers
+datasets
