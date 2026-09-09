@@ -1,4 +1,3 @@
-from numpy import dtype
 from torch.utils.data import Dataset
 import torch
 import torch.nn as nn
@@ -40,23 +39,21 @@ class BilingualDataset(Dataset):
             self.sos_token,
             torch.tensor(enc_input_tokens, dtype=torch.int64),
             self.eos_token,
-            torch.full((enc_num_pad_tokens,), self.pad_token.item(), dtype=torch.int64)
-            # torch.tensor([self.pad_token] * enc_num_pad_tokens, dtype=torch.int64)
-            ]) #, dim=0
+            # torch.full((enc_num_pad_tokens,), self.pad_token.item(), dtype=torch.int64)
+            torch.tensor([self.pad_token] * enc_num_pad_tokens, dtype=torch.int64),
+            ], dim=0,)
 
         decoder_input = torch.cat([
             self.sos_token,
             torch.tensor(dec_input_tokens, dtype=torch.int64),
-            torch.full((enc_num_pad_tokens,), self.pad_token.item(), dtype=torch.int64)
-            # torch.tensor([self.pad_token] * dec_num_pad_tokens, dtype=torch.int64)
-            ]) #, dim=0 
+            torch.tensor([self.pad_token] * dec_num_pad_tokens, dtype=torch.int64),
+            ], dim=0,)
 
         label = torch.cat([
             torch.tensor(enc_input_tokens, dtype=torch.int64),
             self.eos_token,
-            torch.full((enc_num_pad_tokens,), self.pad_token.item(), dtype=torch.int64)
-            # torch.tensor([self.pad_token] * enc_num_pad_tokens, dtype=torch.int64)
-            ]) #, dim=0
+            torch.tensor([self.pad_token] * dec_num_pad_tokens, dtype=torch.int64),
+            ], dim=0,)
 
         # length check
         assert encoder_input.size(0) == self.seq_len, "encoder_input != seq_len"
