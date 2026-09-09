@@ -50,7 +50,7 @@ class BilingualDataset(Dataset):
             ], dim=0,)
 
         label = torch.cat([
-            torch.tensor(enc_input_tokens, dtype=torch.int64),
+            torch.tensor(dec_input_tokens, dtype=torch.int64),
             self.eos_token,
             torch.tensor([self.pad_token] * dec_num_pad_tokens, dtype=torch.int64),
             ], dim=0,)
