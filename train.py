@@ -148,12 +148,6 @@ def train_model(config):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Available device: {device}")
 
-
-    if config['colab']:
-        import shutil
-        from google.colab import drive
-        drive.mount('/content/drive')
-
     Path(config['model_dir']).mkdir(parents=True, exist_ok=True)
 
     train_dataloader, val_dataloader, tokenizer_src, tokenizer_tgt = get_ds(config)
@@ -207,7 +201,9 @@ def train_model(config):
             global_step += 1
 
         run_validation(model, val_dataloader, tokenizer_src, tokenizer_tgt, config['seq_len'], device, lambda msg: batch_iterator.write(msg))
-        if config['colab']: shutil.copytree('/content/transformer-ver1/', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True)
+        if config['colab']: 
+            import shutil
+            shutil.copytree('/content/transformer-ver1/', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True)
 
         # save the model
         model_filename = get_weights_filepath(config, f"{epoch:02d}")

@@ -16,6 +16,14 @@ def get_config():
             "colab" : False, # if running in google colab it'll automatically save the model weights to google drive
             }
 
+
+'''
+run this in a cell if using colab
+from google.colab import drive
+drive.mount('/content/drive')
+'''
+
+
 def get_weights_filepath(config, epoch:str):
     model_dir = config['model_dir']
     model_prefix = config['model_prefix']
