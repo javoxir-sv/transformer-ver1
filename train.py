@@ -201,9 +201,6 @@ def train_model(config):
             global_step += 1
 
         run_validation(model, val_dataloader, tokenizer_src, tokenizer_tgt, config['seq_len'], device, lambda msg: batch_iterator.write(msg))
-        if config['colab']: 
-            import shutil
-            shutil.copytree('.', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True)
 
         # save the model
         model_filename = get_weights_filepath(config, f"{epoch:02d}")
@@ -213,6 +210,18 @@ def train_model(config):
             'optimizer_state_dict' : optimizer.state_dict(),
             'global_step' : global_step
             }, model_filename)
+
+        if config['colab']: 
+            import subprocess             # linux native version
+            subprocess.run(["rsync", "-avu", "/content/transformer-ver1", "/content/drive/MyDrive/transformer-ver1/"], check=True)
+            
+#             import shutil, os
+#             shutil.copytree('.', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True, copy_function=copy_if_missing)
+#
+# def copy_if_missing(src, dst):
+#     if not os.path.exists(dst):
+#         shutil.copy2(src, dst)
+
 
 if __name__ == '__main__':
     # warnings.filterwarnings('ignore')
