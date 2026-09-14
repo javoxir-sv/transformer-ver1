@@ -203,7 +203,7 @@ def train_model(config):
         run_validation(model, val_dataloader, tokenizer_src, tokenizer_tgt, config['seq_len'], device, lambda msg: batch_iterator.write(msg))
         if config['colab']: 
             import shutil
-            shutil.copytree('/content/transformer-ver1/', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True)
+            shutil.copytree('.', '/content/drive/MyDrive/transformer-ver1/', dirs_exist_ok=True)
 
         # save the model
         model_filename = get_weights_filepath(config, f"{epoch:02d}")
