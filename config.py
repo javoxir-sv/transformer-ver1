@@ -13,6 +13,7 @@ def get_config():
             "preload" : None, # e.g.: "07"
             "tokenizer_file" : "tokenizer_{0}.json",
             "experiment_name" : "runs/tmodel",
+            "colab" : False, # if running in google colab it'll automatically save the model weights to google drive
             }
 
 def get_weights_filepath(config, epoch:str):
